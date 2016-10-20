@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class MemProcessor implements MetricProcessor {
 
-    @Value("${statful.client.springboot.metrics.units.enabled:false}")
-    private boolean unitsEnabled;
-
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
         // Example: mem.free=442414
@@ -27,10 +24,6 @@ public class MemProcessor implements MetricProcessor {
                 break;
             default:
                 throw new IllegalArgumentException();
-        }
-
-        if (unitsEnabled) {
-            tags.putTag("unit", "KB");
         }
 
         return new ProcessedMetric.Builder().withName(SYSTEM_METRICS_PREFIX + metricSplit[0])

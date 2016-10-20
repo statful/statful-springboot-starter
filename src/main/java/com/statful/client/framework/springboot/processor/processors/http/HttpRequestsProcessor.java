@@ -15,9 +15,6 @@ public class HttpRequestsProcessor implements MetricProcessor {
     private static Pattern COUNTER_STATUS_PATTERN = Pattern.compile("^counter\\.status\\.(\\d{3})\\.(.+)$");
     private static Pattern GAUGE_RESPONSE_PATTERN = Pattern.compile("^gauge\\.response\\.(.+)$");
 
-    @Value("${statful.client.springboot.metrics.units.enabled.enabled:false}")
-    private boolean unitsEnabled;
-
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
         /**
@@ -59,10 +56,6 @@ public class HttpRequestsProcessor implements MetricProcessor {
     private ProcessedMetric processGauge(String url, ExportedMetric exportedMetric) {
         Tags tags = new Tags();
         tags.putTag("url", url);
-
-        if (unitsEnabled) {
-            tags.putTag("unit", "ms");
-        }
 
         return new ProcessedMetric.Builder().withName(LATEST_METRICS_PREFIX + "responses")
                 .withTags(tags)

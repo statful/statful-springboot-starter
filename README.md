@@ -20,7 +20,7 @@ Statful client for Springboot. This client is intended to gather metrics provide
 ## Supported Versions of Java
 
 | Statful client version | Tested Java versions  | Tested Spring Boot versions
-|:---|:---:---|
+|:---|:---|:---|
 | 1.x.x | `Java 8` | `1.4.1.RELEASE` |
 
 ## Requirements
@@ -118,14 +118,6 @@ INFO 57755 --- [pool-2-thread-1] c.s.c.core.sender.BufferedMetricsSender  : Dry 
 INFO 57755 --- [pool-2-thread-1] c.s.c.core.sender.BufferedMetricsSender  : Dry metric: example.springboot.gauge.system.heap,framework=springboot,application=starter,type=init 262144.0 1476909489668
 INFO 57755 --- [pool-2-thread-1] c.s.c.core.sender.BufferedMetricsSender  : Dry metric: example.springboot.gauge.system.heap,framework=springboot,application=starter,type=used 112536.0 1476909489668
 ```
-
-Optional unit tags can also be enabled by setting the following application property:
-
-```
-statful.client.springboot.metrics.units.enabled=true
-```
-
-This is highly recommended as it will add important context to the metrics when exploring the data.
 
 ## Reference
 

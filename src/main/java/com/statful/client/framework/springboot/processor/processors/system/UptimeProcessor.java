@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class UptimeProcessor implements MetricProcessor {
 
-    @Value("${statful.client.springboot.metrics.units.enabled:false}")
-    private boolean unitsEnabled;
-
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
         /**
@@ -31,10 +28,6 @@ public class UptimeProcessor implements MetricProcessor {
                 break;
             default:
                 throw new IllegalArgumentException();
-        }
-
-        if (unitsEnabled) {
-            tags.putTag("unit", "ms");
         }
 
         return new ProcessedMetric.Builder().withName(SYSTEM_METRICS_PREFIX + "uptime")

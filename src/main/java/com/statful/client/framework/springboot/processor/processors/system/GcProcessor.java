@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 
 public class GcProcessor implements MetricProcessor {
 
-    @Value("${statful.client.springboot.metrics.units.enabled:false}")
-    private boolean unitsEnabled;
-
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
         /**
@@ -32,9 +29,6 @@ public class GcProcessor implements MetricProcessor {
                 break;
             case "time":
                 metricType = MetricType.TIMER;
-                if (unitsEnabled) {
-                    tags.putTag("unit", "ms");
-                }
                 break;
             default:
                 throw new IllegalArgumentException();
