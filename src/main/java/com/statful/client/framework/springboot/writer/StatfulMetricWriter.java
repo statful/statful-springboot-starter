@@ -35,6 +35,10 @@ public class StatfulMetricWriter implements MetricWriter {
     public void set(Metric<?> metric) {
         statfulClientProxy.ingestMetric(metric);
     }
+
+    public void setStatfulClientProxy(StatfulClientProxy statfulClientProxy) {
+        this.statfulClientProxy = statfulClientProxy;
+    }
 }
 
 

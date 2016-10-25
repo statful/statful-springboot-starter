@@ -5,8 +5,6 @@ import com.statful.client.framework.springboot.common.ExportedMetric;
 import com.statful.client.framework.springboot.common.MetricType;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
 import com.statful.client.framework.springboot.processor.MetricProcessor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 public class GcProcessor implements MetricProcessor {
 
@@ -18,6 +16,10 @@ public class GcProcessor implements MetricProcessor {
          *  gc.ps_scavenge.time=55
          */
         String[] metricSplit = exportedMetric.getName().split("\\.");
+
+        if (metricSplit.length != 3) {
+            throw  new IllegalArgumentException();
+        }
 
         Tags tags = Tags.from("name", metricSplit[1]);
 

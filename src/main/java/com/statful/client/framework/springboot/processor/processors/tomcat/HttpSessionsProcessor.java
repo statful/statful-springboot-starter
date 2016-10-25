@@ -17,6 +17,10 @@ public class HttpSessionsProcessor implements MetricProcessor {
          */
         String[] metricSplit = exportedMetric.getName().split("\\.");
 
+        if (metricSplit.length != 2) {
+            throw new IllegalArgumentException();
+        }
+
         Tags tags = Tags.from("type", metricSplit[1]);
 
         return new ProcessedMetric.Builder().withName(TOMCAT_METRICS_PREFIX + metricSplit[0])

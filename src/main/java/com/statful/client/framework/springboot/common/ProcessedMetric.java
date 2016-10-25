@@ -1,7 +1,5 @@
 package com.statful.client.framework.springboot.common;
 
-import com.statful.client.domain.api.Aggregation;
-import com.statful.client.domain.api.AggregationFreq;
 import com.statful.client.domain.api.Aggregations;
 import com.statful.client.domain.api.Tags;
 
@@ -104,6 +102,5 @@ public class ProcessedMetric {
         public ProcessedMetric build() {
             return new ProcessedMetric(this);
         }
-
     }
 }

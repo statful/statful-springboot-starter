@@ -1,13 +1,13 @@
 package com.statful.client.framework.springboot.common;
 
 import com.statful.client.domain.api.Aggregation;
-import com.statful.client.domain.api.AggregationFreq;
+import com.statful.client.domain.api.AggregationFrequency;
 
 public class AggregationDetails {
     private Aggregation aggregation;
-    private AggregationFreq aggregationFreq;
+    private AggregationFrequency aggregationFreq;
 
-    public AggregationDetails(Aggregation aggregation, AggregationFreq aggregationFreq) {
+    public AggregationDetails(Aggregation aggregation, AggregationFrequency aggregationFreq) {
         this.aggregation = aggregation;
         this.aggregationFreq = aggregationFreq;
     }
@@ -16,7 +16,7 @@ public class AggregationDetails {
         return aggregation;
     }
 
-    public AggregationFreq getAggregationFreq() {
+    public AggregationFrequency getAggregationFrequency() {
         return aggregationFreq;
     }
 }

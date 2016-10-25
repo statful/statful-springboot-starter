@@ -8,7 +8,8 @@ import com.statful.client.framework.springboot.common.MetricType;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
 import com.statful.client.framework.springboot.config.SpringbootClientConfiguration;
 import com.statful.client.framework.springboot.processor.StatfulMetricProcessor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.metrics.Metric;
 import org.springframework.boot.actuate.metrics.writer.Delta;
@@ -25,8 +26,13 @@ import java.util.Optional;
 @ConditionalOnBean(value = StatfulClient.class)
 public class StatfulClientProxy {
 
+    private static final Log logger = LogFactory.getLog(StatfulClientProxy.class);
+
     @Resource
     private SpringbootClientConfiguration springbootClientConfiguration;
+
+    @Resource
+    private StatfulMetricProcessor statfulMetricProcessor;
 
     @Resource
     private StatfulClient statfulClient;
@@ -68,8 +74,8 @@ public class StatfulClientProxy {
     }
 
     private void ingest(ExportedMetric exportedMetric) {
-        if (StatfulMetricProcessor.validate(exportedMetric)) {
-            ProcessedMetric processedMetric = StatfulMetricProcessor.process(exportedMetric);
+        if (statfulMetricProcessor.validate(exportedMetric)) {
+            ProcessedMetric processedMetric = statfulMetricProcessor.process(exportedMetric);
 
             if (processedMetric.getAggregationDetails().isPresent()) {
                 putMetricAggregated(processedMetric);
@@ -80,10 +86,10 @@ public class StatfulClientProxy {
     }
 
     private void putMetricAggregated(ProcessedMetric processedMetric) {
-        statfulClient.putAggregated(buildMetricName(processedMetric.getMetricType(), processedMetric.getName()),
+        statfulClient.aggregatedPut(buildMetricName(processedMetric.getMetricType(), processedMetric.getName()),
                 processedMetric.getValue().toString(), mergeDefaultTags(processedMetric.getTags()),
                 processedMetric.getAggregationDetails().get().getAggregation(),
-                processedMetric.getAggregationDetails().get().getAggregationFreq(), 100, metricsNamespace,
+                processedMetric.getAggregationDetails().get().getAggregationFrequency(), 100, metricsNamespace,
                 processedMetric.getTimestamp());
     }
 
@@ -113,5 +119,25 @@ public class StatfulClientProxy {
 
     private String buildMetricName(MetricType metricType, String metricName) {
         return metricsPrefix.replaceAll("\\.$", "") + "." + metricType.name().toLowerCase() + "." + metricName;
+    }
+
+    public void setSpringbootClientConfiguration(SpringbootClientConfiguration springbootClientConfiguration) {
+        this.springbootClientConfiguration = springbootClientConfiguration;
+    }
+
+    public void setStatfulMetricProcessor(StatfulMetricProcessor statfulMetricProcessor) {
+        this.statfulMetricProcessor = statfulMetricProcessor;
+    }
+
+    public void setStatfulClient(StatfulClient statfulClient) {
+        this.statfulClient = statfulClient;
+    }
+
+    public void setMetricsPrefix(String metricsPrefix) {
+        this.metricsPrefix = metricsPrefix;
+    }
+
+    public void setMetricsNamespace(String metricsNamespace) {
+        this.metricsNamespace = metricsNamespace;
     }
 }

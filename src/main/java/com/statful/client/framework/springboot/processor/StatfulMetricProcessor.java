@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class StatfulMetricProcessor {
 
-    public static boolean validate(ExportedMetric exportedMetric) {
+    public boolean validate(ExportedMetric exportedMetric) {
         return ProcessorMap.validateProcessor(exportedMetric.getName());
     }
 
-    public static ProcessedMetric process(ExportedMetric exportedMetric) {
+    public ProcessedMetric process(ExportedMetric exportedMetric) {
         MetricProcessor metricProcessor = ProcessorMap.getProcessor(exportedMetric.getName());
 
         return metricProcessor.process(exportedMetric);
