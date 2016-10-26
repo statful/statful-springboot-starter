@@ -8,8 +8,6 @@ import com.statful.client.framework.springboot.common.MetricType;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
 import com.statful.client.framework.springboot.config.SpringbootClientConfiguration;
 import com.statful.client.framework.springboot.processor.StatfulMetricProcessor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.metrics.Metric;
 import org.springframework.boot.actuate.metrics.writer.Delta;
@@ -25,8 +23,6 @@ import java.util.Optional;
 @Component
 @ConditionalOnBean(value = StatfulClient.class)
 public class StatfulClientProxy {
-
-    private static final Log logger = LogFactory.getLog(StatfulClientProxy.class);
 
     @Resource
     private SpringbootClientConfiguration springbootClientConfiguration;

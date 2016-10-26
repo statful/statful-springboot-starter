@@ -34,7 +34,7 @@ public class SpringbootClientConfiguration {
         private List<Tags> tags = new ArrayList<>();
 
         public List<Tags> getTags() {
-            return tags;
+            return new ArrayList<>(tags);
         }
 
         public void setTags(List<Tags> tags) {

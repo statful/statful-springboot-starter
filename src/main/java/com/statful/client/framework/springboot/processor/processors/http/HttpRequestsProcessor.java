@@ -5,13 +5,14 @@ import com.statful.client.framework.springboot.common.ExportedMetric;
 import com.statful.client.framework.springboot.common.MetricType;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
 import com.statful.client.framework.springboot.processor.MetricProcessor;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HttpRequestsProcessor implements MetricProcessor {
 
+    private static final String REQUESTS_NAME = ACCUMULATED_METRICS_PREFIX + "requests";
+    private static final String RESPONSES_NAME = LATEST_METRICS_PREFIX + "responses";
     private static Pattern COUNTER_STATUS_PATTERN = Pattern.compile("^counter\\.status\\.(\\d{3})\\.(.+)$");
     private static Pattern GAUGE_RESPONSE_PATTERN = Pattern.compile("^gauge\\.response\\.(.+)$");
 
@@ -45,7 +46,7 @@ public class HttpRequestsProcessor implements MetricProcessor {
         tags.putTag("status", status);
         tags.putTag("url", url);
 
-        return new ProcessedMetric.Builder().withName(ACCUMULATED_METRICS_PREFIX + "requests")
+        return new ProcessedMetric.Builder().withName(REQUESTS_NAME)
                 .withTags(tags)
                 .withMetricType(MetricType.COUNTER)
                 .withValue(exportedMetric.getValue().doubleValue())
@@ -57,7 +58,7 @@ public class HttpRequestsProcessor implements MetricProcessor {
         Tags tags = new Tags();
         tags.putTag("url", url);
 
-        return new ProcessedMetric.Builder().withName(LATEST_METRICS_PREFIX + "responses")
+        return new ProcessedMetric.Builder().withName(RESPONSES_NAME)
                 .withTags(tags)
                 .withMetricType(MetricType.TIMER)
                 .withValue(exportedMetric.getValue().doubleValue())

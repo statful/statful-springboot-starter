@@ -14,13 +14,13 @@ import javax.annotation.Resource;
  */
 public class StatfulMetricWriter implements MetricWriter {
 
-    private static final Log logger = LogFactory.getLog(StatfulMetricWriter.class);
+    private static final Log LOGGER = LogFactory.getLog(StatfulMetricWriter.class);
 
     @Resource
     StatfulClientProxy statfulClientProxy;
 
     public StatfulMetricWriter() {
-        logger.info("Initializing StatfulMetricWriter");
+        LOGGER.info("Initializing StatfulMetricWriter");
     }
 
     @Override
@@ -29,7 +29,9 @@ public class StatfulMetricWriter implements MetricWriter {
     }
 
     @Override
-    public void reset(String s) {}
+    public void reset(String s) {
+        LOGGER.debug("MetricWriter reset method is not implemented");
+    }
 
     @Override
     public void set(Metric<?> metric) {

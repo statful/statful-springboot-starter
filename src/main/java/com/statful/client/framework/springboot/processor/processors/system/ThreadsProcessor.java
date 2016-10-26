@@ -8,6 +8,8 @@ import com.statful.client.framework.springboot.processor.MetricProcessor;
 
 public class ThreadsProcessor implements MetricProcessor {
 
+    private static final Tags TOTAL_TYPE_TAGS = Tags.from("type", "total");
+
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
         /**
@@ -23,7 +25,7 @@ public class ThreadsProcessor implements MetricProcessor {
 
         switch (metricSplit.length) {
             case 1:
-                tags = Tags.from("type", "total");
+                tags = TOTAL_TYPE_TAGS;
                 break;
             case 2:
                 tags = Tags.from("type", metricSplit[1]);

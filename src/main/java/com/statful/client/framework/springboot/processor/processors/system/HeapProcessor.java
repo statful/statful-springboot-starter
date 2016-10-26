@@ -5,9 +5,10 @@ import com.statful.client.framework.springboot.common.ExportedMetric;
 import com.statful.client.framework.springboot.common.MetricType;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
 import com.statful.client.framework.springboot.processor.MetricProcessor;
-import org.springframework.beans.factory.annotation.Value;
 
 public class HeapProcessor implements MetricProcessor {
+
+    private static final Tags MAX_TYPE_TAGS = Tags.from("type", "max");
 
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
@@ -24,7 +25,7 @@ public class HeapProcessor implements MetricProcessor {
 
         switch (metricSplit.length) {
             case 1:
-                tags = Tags.from("type", "max");
+                tags = MAX_TYPE_TAGS;
                 break;
             case 2:
                 tags = Tags.from("type", metricSplit[1]);
