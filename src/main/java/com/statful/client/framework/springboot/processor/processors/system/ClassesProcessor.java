@@ -11,6 +11,14 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Processor responsible for parsing exported classes metrics.
+ *
+ * Example:
+ *   classes=6366
+ *   classes.loaded=6367
+ *   classes.unloaded=1
+ */
 @Component
 @ConditionalOnProperty(name = "statful.client.springboot.processors.system.classes.enabled",
         havingValue = "true", matchIfMissing = true)
@@ -20,12 +28,6 @@ public class ClassesProcessor implements MetricProcessor {
 
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
-        /**
-         * Example:
-         *   classes=6366
-         *   classes.loaded=6367
-         *   classes.unloaded=1
-         */
         String[] metricSplit = exportedMetric.getName().split("\\.");
 
         Tags tags;

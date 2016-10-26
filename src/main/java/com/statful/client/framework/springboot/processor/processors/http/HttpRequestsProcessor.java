@@ -13,6 +13,18 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Processor responsible for parsing exported http request metrics.
+ *
+ * Example:
+ *  counter.status.200.root=20
+ *  counter.status.200.metrics=3
+ *  counter.status.200.star-star.favicon.ico=5
+ *  counter.status.401.root=4
+ *  gauge.response.star-star.favicon.ico=6
+ *  gauge.response.root=2
+ *  gauge.response.metrics=3
+ */
 @Component
 @ConditionalOnProperty(name = "statful.client.springboot.processors.http.httpRequests.enabled",
         havingValue = "true", matchIfMissing = true)
@@ -25,17 +37,6 @@ public class HttpRequestsProcessor implements MetricProcessor {
 
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
-        /**
-         * Example:
-         *  counter.status.200.root=20
-         *  counter.status.200.metrics=3
-         *  counter.status.200.star-star.favicon.ico=5
-         *  counter.status.401.root=4
-         *  gauge.response.star-star.favicon.ico=6
-         *  gauge.response.root=2
-         *  gauge.response.metrics=3
-         */
-
         Matcher counterMatcher = COUNTER_STATUS_PATTERN.matcher(exportedMetric.getName());
         Matcher gaugeMatcher = GAUGE_RESPONSE_PATTERN.matcher(exportedMetric.getName());
 

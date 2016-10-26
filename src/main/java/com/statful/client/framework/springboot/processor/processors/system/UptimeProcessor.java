@@ -11,6 +11,13 @@ import org.springframework.stereotype.Component;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Processor responsible for parsing exported uptime metrics.
+ *
+ * Example:
+ *  instance.uptime=442414
+ *  uptime=44278
+ */
 @Component
 @ConditionalOnProperty(name = "statful.client.springboot.processors.system.uptime.enabled",
         havingValue = "true", matchIfMissing = true)
@@ -21,11 +28,6 @@ public class UptimeProcessor implements MetricProcessor {
 
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
-        /**
-         * Example:
-         *  instance.uptime=442414
-         *  uptime=44278
-         */
         String[] metricSplit = exportedMetric.getName().split("\\.");
 
         Tags tags;

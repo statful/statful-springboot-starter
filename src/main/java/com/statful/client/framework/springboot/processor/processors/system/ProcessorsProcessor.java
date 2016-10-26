@@ -11,6 +11,12 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Processor responsible for parsing exported processors metrics.
+ *
+ * Example:
+ *  processors=8
+ */
 @Component
 @ConditionalOnProperty(name = "statful.client.springboot.processors.system.processors.enabled",
         havingValue = "true", matchIfMissing = true)
@@ -18,7 +24,6 @@ public class ProcessorsProcessor implements MetricProcessor {
 
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
-        // Example: processors=8
         return GenericProcessor.process(SYSTEM_METRICS_PREFIX + exportedMetric.getName(),
                 MetricType.GAUGE, exportedMetric.getValue().doubleValue(), exportedMetric.getTimestamp().getTime());
     }

@@ -11,6 +11,13 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Processor responsible for parsing exported tomcat http sessions metrics.
+ *
+ * Example:
+ *  httpsessions.max=-1
+ *  httpsessions.active=5
+ */
 @Component
 @ConditionalOnProperty(name = "statful.client.springboot.processors.tomcat.httpSessions.enabled",
         havingValue = "true", matchIfMissing = true)
@@ -18,11 +25,6 @@ public class HttpSessionsProcessor implements MetricProcessor {
 
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
-        /**
-         * Example:
-         *  httpsessions.max=-1
-         *  httpsessions.active=5
-         */
         String[] metricSplit = exportedMetric.getName().split("\\.");
 
         if (metricSplit.length != 2) {

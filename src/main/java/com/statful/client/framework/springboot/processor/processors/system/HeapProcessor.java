@@ -11,6 +11,15 @@ import org.springframework.stereotype.Component;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Processor responsible for parsing exported heap metrics.
+ *
+ * Example:
+ *  heap.committed=389632
+ *  heap.init=262144
+ *  heap.used=131031
+ *  heap=3728384
+ */
 @Component
 @ConditionalOnProperty(name = "statful.client.springboot.processors.system.heap.enabled",
         havingValue = "true", matchIfMissing = true)
@@ -20,13 +29,6 @@ public class HeapProcessor implements MetricProcessor {
 
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
-        /**
-         * Example:
-         *  heap.committed=389632
-         *  heap.init=262144
-         *  heap.used=131031
-         *  heap=3728384
-         */
         String[] metricSplit = exportedMetric.getName().split("\\.");
 
         Tags tags;

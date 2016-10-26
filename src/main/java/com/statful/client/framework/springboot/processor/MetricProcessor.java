@@ -22,5 +22,9 @@ public interface MetricProcessor {
      */
     ProcessedMetric process(ExportedMetric exportedMetric);
 
+    /**
+     * Returns the list of strings to identify the processor.
+     * @return {@link List}
+     */
     List<String> getProcessorKeys();
 }

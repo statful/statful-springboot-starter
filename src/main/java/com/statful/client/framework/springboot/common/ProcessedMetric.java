@@ -6,6 +6,9 @@ import com.statful.client.domain.api.Tags;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Class representing a metric processed by the Statful processors.
+ */
 public class ProcessedMetric {
 
     private String name;
@@ -16,6 +19,10 @@ public class ProcessedMetric {
     private Aggregations aggregations;
     private AggregationDetails aggregationDetails;
 
+    /**
+     * Builder constructor.
+     * @param builder {@link com.statful.client.framework.springboot.common.ProcessedMetric.Builder}
+     */
     public ProcessedMetric(Builder builder) {
         this.name = builder.name;
         this.metricType = builder.metricType;

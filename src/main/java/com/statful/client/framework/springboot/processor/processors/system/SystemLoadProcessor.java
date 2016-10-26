@@ -13,6 +13,12 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Processor responsible for parsing exported systemload metrics.
+ *
+ * Example:
+ *  systemload.average=1.11765
+ */
 @Component
 @ConditionalOnProperty(name = "statful.client.springboot.processors.system.systemload.enabled",
         havingValue = "true", matchIfMissing = true)
@@ -20,7 +26,6 @@ public class SystemLoadProcessor implements MetricProcessor {
 
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
-        // Example: systemload.average=1.11765
         String[] metricSplit = exportedMetric.getName().split("\\.");
 
         if (metricSplit.length != 2) {

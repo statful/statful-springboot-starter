@@ -3,11 +3,18 @@ package com.statful.client.framework.springboot.common;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Class to represent a metric exported by Actuator.
+ */
 public class ExportedMetric {
     private String name;
     private Number value;
     private Date timestamp;
 
+    /**
+     * Builder constructor.
+     * @param builder {@link com.statful.client.framework.springboot.common.ExportedMetric.Builder}
+     */
     public ExportedMetric(Builder builder) {
         this.name = builder.name;
         this.value = builder.value;

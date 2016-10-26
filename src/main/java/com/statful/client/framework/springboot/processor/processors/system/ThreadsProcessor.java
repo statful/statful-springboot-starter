@@ -11,6 +11,15 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Processor responsible for parsing exported threads metrics.
+ *
+ * Example:
+ *  threads.peak=15
+ *  threads.daemon=11
+ *  threads.totalStarted=18
+ *  threads=14
+ */
 @Component
 @ConditionalOnProperty(name = "statful.client.springboot.processors.system.threads.enabled",
         havingValue = "true", matchIfMissing = true)
@@ -20,13 +29,6 @@ public class ThreadsProcessor implements MetricProcessor {
 
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
-        /**
-         * Example:
-         *  threads.peak=15
-         *  threads.daemon=11
-         *  threads.totalStarted=18
-         *  threads=14
-         */
         String[] metricSplit = exportedMetric.getName().split("\\.");
 
         Tags tags;

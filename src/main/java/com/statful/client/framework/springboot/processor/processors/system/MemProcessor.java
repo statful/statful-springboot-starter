@@ -11,6 +11,13 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Processor responsible for parsing exported mem metrics.
+ *
+ * Example:
+ *  mem.free=258600
+ *  mem=442414
+ */
 @Component
 @ConditionalOnProperty(name = "statful.client.springboot.processors.system.mem.enabled",
         havingValue = "true", matchIfMissing = true)
@@ -20,11 +27,6 @@ public class MemProcessor implements MetricProcessor {
 
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
-        /**
-         * Example:
-         *  mem.free=258600
-         *  mem=442414
-         */
         String[] metricSplit = exportedMetric.getName().split("\\.");
 
         Tags tags;

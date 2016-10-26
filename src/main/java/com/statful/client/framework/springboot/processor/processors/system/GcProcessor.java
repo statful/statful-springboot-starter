@@ -11,6 +11,13 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Processor responsible for parsing exported gc metrics.
+ *
+ * Example:
+ *  gc.ps_scavenge.count=5
+ *  gc.ps_scavenge.time=55
+ */
 @Component
 @ConditionalOnProperty(name = "statful.client.springboot.processors.system.gc.enabled",
         havingValue = "true", matchIfMissing = true)
@@ -18,11 +25,6 @@ public class GcProcessor implements MetricProcessor {
 
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
-        /**
-         * Example:
-         *  gc.ps_scavenge.count=5
-         *  gc.ps_scavenge.time=55
-         */
         String[] metricSplit = exportedMetric.getName().split("\\.");
 
         if (metricSplit.length != 3) {
