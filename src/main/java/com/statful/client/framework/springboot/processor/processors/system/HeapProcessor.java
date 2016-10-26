@@ -5,7 +5,15 @@ import com.statful.client.framework.springboot.common.ExportedMetric;
 import com.statful.client.framework.springboot.common.MetricType;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
 import com.statful.client.framework.springboot.processor.MetricProcessor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
+import java.util.List;
+
+@Component
+@ConditionalOnProperty(name = "statful.client.springboot.processors.system.heap.enabled",
+        havingValue = "true", matchIfMissing = true)
 public class HeapProcessor implements MetricProcessor {
 
     private static final Tags MAX_TYPE_TAGS = Tags.from("type", "max");
@@ -40,5 +48,13 @@ public class HeapProcessor implements MetricProcessor {
                 .withValue(exportedMetric.getValue().doubleValue())
                 .withTimestamp(exportedMetric.getTimestamp().getTime())
                 .build();
+    }
+
+    @Override
+    public List<String> getProcessorKeys() {
+        List<String> keys = new LinkedList<>();
+        keys.add("heap");
+        keys.add("nonheap");
+        return keys;
     }
 }

@@ -5,7 +5,15 @@ import com.statful.client.framework.springboot.common.ExportedMetric;
 import com.statful.client.framework.springboot.common.MetricType;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
 import com.statful.client.framework.springboot.processor.MetricProcessor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
+import java.util.List;
+
+@Component
+@ConditionalOnProperty(name = "statful.client.springboot.processors.system.uptime.enabled",
+        havingValue = "true", matchIfMissing = true)
 public class UptimeProcessor implements MetricProcessor {
 
     private static final String UPTIME_NAME = SYSTEM_METRICS_PREFIX + "uptime";
@@ -38,5 +46,13 @@ public class UptimeProcessor implements MetricProcessor {
                 .withValue(exportedMetric.getValue().doubleValue())
                 .withTimestamp(exportedMetric.getTimestamp().getTime())
                 .build();
+    }
+
+    @Override
+    public List<String> getProcessorKeys() {
+        List<String> keys = new LinkedList<>();
+        keys.add("instance");
+        keys.add("uptime");
+        return keys;
     }
 }

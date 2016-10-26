@@ -5,10 +5,17 @@ import com.statful.client.framework.springboot.common.ExportedMetric;
 import com.statful.client.framework.springboot.common.MetricType;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
 import com.statful.client.framework.springboot.processor.MetricProcessor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
+@ConditionalOnProperty(name = "statful.client.springboot.processors.http.httpRequests.enabled",
+        havingValue = "true", matchIfMissing = true)
 public class HttpRequestsProcessor implements MetricProcessor {
 
     private static final String REQUESTS_NAME = ACCUMULATED_METRICS_PREFIX + "requests";
@@ -39,6 +46,15 @@ public class HttpRequestsProcessor implements MetricProcessor {
         } else {
             throw new IllegalArgumentException();
         }
+    }
+
+    @Override
+    public List<String> getProcessorKeys() {
+        List<String> keys = new LinkedList<>();
+        keys.add("counter.status");
+        keys.add("gauge.response");
+
+        return keys;
     }
 
     private ProcessedMetric processCounter(String status, String url, ExportedMetric exportedMetric) {

@@ -3,6 +3,8 @@ package com.statful.client.framework.springboot.processor;
 import com.statful.client.framework.springboot.common.ExportedMetric;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
 
+import java.util.List;
+
 /**
  * Interface that define the contract for metric processors.
  */
@@ -19,4 +21,6 @@ public interface MetricProcessor {
      * @return {@link ProcessedMetric} Processed metric
      */
     ProcessedMetric process(ExportedMetric exportedMetric);
+
+    List<String> getProcessorKeys();
 }

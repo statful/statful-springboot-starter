@@ -5,7 +5,15 @@ import com.statful.client.framework.springboot.common.ExportedMetric;
 import com.statful.client.framework.springboot.common.MetricType;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
 import com.statful.client.framework.springboot.processor.MetricProcessor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.List;
+
+@Component
+@ConditionalOnProperty(name = "statful.client.springboot.processors.system.threads.enabled",
+        havingValue = "true", matchIfMissing = true)
 public class ThreadsProcessor implements MetricProcessor {
 
     private static final Tags TOTAL_TYPE_TAGS = Tags.from("type", "total");
@@ -40,5 +48,10 @@ public class ThreadsProcessor implements MetricProcessor {
                 .withValue(exportedMetric.getValue().doubleValue())
                 .withTimestamp(exportedMetric.getTimestamp().getTime())
                 .build();
+    }
+
+    @Override
+    public List<String> getProcessorKeys() {
+        return Collections.singletonList("threads");
     }
 }

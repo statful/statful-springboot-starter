@@ -119,6 +119,25 @@ INFO 57755 --- [pool-2-thread-1] c.s.c.core.sender.BufferedMetricsSender  : Dry 
 INFO 57755 --- [pool-2-thread-1] c.s.c.core.sender.BufferedMetricsSender  : Dry metric: example.springboot.gauge.system.heap,framework=springboot,application=starter,type=used 112536.0 1476909489668
 ```
 
+### Control Processors
+
+You can enable/disable all metric processors by setting the following properties:
+ 
+```
+statful.client.springboot.processors.tomcat.httpSessions.enabled=true
+statful.client.springboot.processors.http.httpRequests.enabled=true
+statful.client.springboot.processors.system.classes.enabled=true
+statful.client.springboot.processors.system.gc.enabled=true
+statful.client.springboot.processors.system.heap.enabled=true
+statful.client.springboot.processors.system.mem.enabled=true
+statful.client.springboot.processors.system.processors.enabled=true
+statful.client.springboot.processors.system.systemload.enabled=true
+statful.client.springboot.processors.system.threads.enabled=true
+statful.client.springboot.processors.system.uptime.enabled=true
+```
+
+All processors are enabled by default.
+
 ## Reference
 
 ### Collected Metrics
