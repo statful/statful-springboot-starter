@@ -11,6 +11,29 @@
     <name>spring-client-springboot</name>
     <description>Spring Boot client to send metrics to Statful.</description>
 
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Miguel Fonseca</name>
+            <email>miguel.fonseca@mindera.com</email>
+            <organization>Statful</organization>
+            <organizationUrl>http://www.statful.com</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:statful/statful-client-springboot.git</connection>
+        <developerConnection>scm:git:git@github.com:statful/statful-client-springboot.git</developerConnection>
+        <url>https://github.com/statful/statful-client-springboot.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
