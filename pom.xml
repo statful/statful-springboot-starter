@@ -9,6 +9,7 @@
 
     <name>spring-client-springboot</name>
     <description>Spring Boot client to send metrics to Statful.</description>
+    <url>http://www.statful.com</url>
 
     <licenses>
         <license>
