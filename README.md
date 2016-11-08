@@ -1,4 +1,4 @@
-Statful Client for Java
+Statful Client for Springboot
 ==============
 
 [![Build Status](https://travis-ci.org/statful/statful-client-springboot.svg?branch=master)](https://travis-ci.org/statful/statful-client-springboot)
@@ -9,7 +9,7 @@ Statful client for Springboot. This client is intended to gather metrics provide
 
 ## Table of Contents
 
-* [Supported Versions of Java](#supported-versions-of-java)
+* [Supported Versions](#supported-versions)
 * [Requirements](#requirements)
 * [Quick Start](#quick-start)
 * [Examples](#examples)
@@ -17,7 +17,7 @@ Statful client for Springboot. This client is intended to gather metrics provide
 * [Authors](#authors)
 * [License](#license)
 
-## Supported Versions of Java
+## Supported Versions
 
 | Statful client version | Tested Java versions  | Tested Spring Boot versions
 |:---|:---|:---|
