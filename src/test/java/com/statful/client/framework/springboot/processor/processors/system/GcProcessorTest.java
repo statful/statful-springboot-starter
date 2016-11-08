@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Instant;
-import java.util.Date;
 
 import static com.statful.client.framework.springboot.processor.MetricProcessor.ACCUMULATED_METRICS_PREFIX;
 import static com.statful.client.framework.springboot.processor.MetricProcessor.SYSTEM_METRICS_PREFIX;
@@ -28,7 +27,7 @@ public class GcProcessorTest {
         // Given
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName("gc.ps_scavenge.count")
-                .withTimestamp(Date.from(Instant.EPOCH))
+                .withTimestamp(Instant.EPOCH.plusSeconds(10).getEpochSecond())
                 .withValue(1D)
                 .build();
 
@@ -39,7 +38,7 @@ public class GcProcessorTest {
         assertEquals(SYSTEM_METRICS_PREFIX + ACCUMULATED_METRICS_PREFIX + "gc", processedMetric.getName());
         assertEquals(MetricType.COUNTER, processedMetric.getMetricType());
         assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.toEpochMilli(), processedMetric.getTimestamp());
+        assertEquals(Instant.EPOCH.plusSeconds(10).getEpochSecond(), processedMetric.getTimestamp());
         assertEquals("ps_scavenge", processedMetric.getTags().get().getTagValue("name"));
         assertFalse(processedMetric.getAggregations().isPresent());
         assertFalse(processedMetric.getAggregationDetails().isPresent());
@@ -50,7 +49,7 @@ public class GcProcessorTest {
         // Given
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName("gc.ps_scavenge.time")
-                .withTimestamp(Date.from(Instant.EPOCH))
+                .withTimestamp(Instant.EPOCH.plusSeconds(10).getEpochSecond())
                 .withValue(1D)
                 .build();
 
@@ -61,7 +60,7 @@ public class GcProcessorTest {
         assertEquals(SYSTEM_METRICS_PREFIX + ACCUMULATED_METRICS_PREFIX + "gc", processedMetric.getName());
         assertEquals(MetricType.TIMER, processedMetric.getMetricType());
         assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.toEpochMilli(), processedMetric.getTimestamp());
+        assertEquals(Instant.EPOCH.plusSeconds(10).getEpochSecond(), processedMetric.getTimestamp());
         assertEquals("ps_scavenge", processedMetric.getTags().get().getTagValue("name"));
         assertFalse(processedMetric.getAggregations().isPresent());
         assertFalse(processedMetric.getAggregationDetails().isPresent());

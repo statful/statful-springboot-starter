@@ -66,8 +66,8 @@ public class HttpRequestsProcessor implements MetricProcessor {
         return new ProcessedMetric.Builder().withName(REQUESTS_NAME)
                 .withTags(tags)
                 .withMetricType(MetricType.COUNTER)
-                .withValue(exportedMetric.getValue().doubleValue())
-                .withTimestamp(exportedMetric.getTimestamp().getTime())
+                .withValue(exportedMetric.getValue())
+                .withTimestamp(exportedMetric.getTimestamp())
                 .build();
     }
 
@@ -78,8 +78,8 @@ public class HttpRequestsProcessor implements MetricProcessor {
         return new ProcessedMetric.Builder().withName(RESPONSES_NAME)
                 .withTags(tags)
                 .withMetricType(MetricType.TIMER)
-                .withValue(exportedMetric.getValue().doubleValue())
-                .withTimestamp(exportedMetric.getTimestamp().getTime())
+                .withValue(exportedMetric.getValue())
+                .withTimestamp(exportedMetric.getTimestamp())
                 .build();
     }
 }

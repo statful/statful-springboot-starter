@@ -14,7 +14,7 @@ public class GenericProcessorTest {
         // Given
         String name = "foo";
         MetricType type = MetricType.COUNTER;
-        Double value = 1D;
+        double value = 1D;
         long timestamp = 123456789L;
 
         // When
@@ -23,7 +23,7 @@ public class GenericProcessorTest {
         // Then
         assertEquals(name, processedMetric.getName());
         assertEquals(type, processedMetric.getMetricType());
-        assertEquals(value, processedMetric.getValue());
+        assertEquals(Double.valueOf(value), processedMetric.getValue());
         assertEquals(timestamp, processedMetric.getTimestamp());
         assertFalse(processedMetric.getAggregations().isPresent());
         assertFalse(processedMetric.getTags().isPresent());

@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Instant;
-import java.util.Date;
 
 import static com.statful.client.framework.springboot.processor.MetricProcessor.SYSTEM_METRICS_PREFIX;
 import static org.junit.Assert.assertEquals;
@@ -27,7 +26,7 @@ public class ProcessorsProcessorTest {
         // Given
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName("processors")
-                .withTimestamp(Date.from(Instant.EPOCH))
+                .withTimestamp(Instant.EPOCH.plusSeconds(10).getEpochSecond())
                 .withValue(1D)
                 .build();
 
@@ -38,7 +37,7 @@ public class ProcessorsProcessorTest {
         assertEquals(SYSTEM_METRICS_PREFIX + "processors", processedMetric.getName());
         assertEquals(MetricType.GAUGE, processedMetric.getMetricType());
         assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.toEpochMilli(), processedMetric.getTimestamp());
+        assertEquals(Instant.EPOCH.plusSeconds(10).getEpochSecond(), processedMetric.getTimestamp());
         assertFalse(processedMetric.getAggregations().isPresent());
         assertFalse(processedMetric.getTags().isPresent());
         assertFalse(processedMetric.getAggregationDetails().isPresent());

@@ -49,8 +49,8 @@ public class GcProcessor implements MetricProcessor {
         return new ProcessedMetric.Builder().withName(SYSTEM_METRICS_PREFIX + ACCUMULATED_METRICS_PREFIX + metricSplit[0])
                 .withTags(tags)
                 .withMetricType(metricType)
-                .withValue(exportedMetric.getValue().doubleValue())
-                .withTimestamp(exportedMetric.getTimestamp().getTime())
+                .withValue(exportedMetric.getValue())
+                .withTimestamp(exportedMetric.getTimestamp())
                 .build();
     }
 

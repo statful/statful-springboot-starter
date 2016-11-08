@@ -42,7 +42,7 @@ public class StatfulMetricProcessorTest {
         EXPORTED_METRIC = new ExportedMetric.Builder()
                 .withName(GC_PS_SCAVENGE_COUNT)
                 .withValue(1D)
-                .withTimestamp(Date.from(Instant.EPOCH))
+                .withTimestamp(Date.from(Instant.EPOCH.plusSeconds(10)).getTime() / 1000L)
                 .build();
     }
 
@@ -78,7 +78,7 @@ public class StatfulMetricProcessorTest {
         assertEquals(SYSTEM_METRICS_PREFIX + ACCUMULATED_METRICS_PREFIX + "gc", processedMetric.getName());
         assertEquals(MetricType.COUNTER, processedMetric.getMetricType());
         assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.toEpochMilli(), processedMetric.getTimestamp());
+        assertEquals(Instant.EPOCH.plusSeconds(10).getEpochSecond(), processedMetric.getTimestamp());
         assertEquals("ps_scavenge", processedMetric.getTags().get().getTagValue("name"));
         assertFalse(processedMetric.getAggregations().isPresent());
         assertFalse(processedMetric.getAggregationDetails().isPresent());

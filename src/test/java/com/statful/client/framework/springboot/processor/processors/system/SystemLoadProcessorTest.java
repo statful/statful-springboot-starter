@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Instant;
-import java.util.Date;
 
 import static com.statful.client.framework.springboot.processor.MetricProcessor.SYSTEM_METRICS_PREFIX;
 import static org.junit.Assert.assertEquals;
@@ -29,7 +28,7 @@ public class SystemLoadProcessorTest {
         // Given
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName("systemload.average")
-                .withTimestamp(Date.from(Instant.EPOCH))
+                .withTimestamp(Instant.EPOCH.plusSeconds(10).getEpochSecond())
                 .withValue(1D)
                 .build();
 
@@ -40,7 +39,7 @@ public class SystemLoadProcessorTest {
         assertEquals(SYSTEM_METRICS_PREFIX + "systemload", processedMetric.getName());
         assertEquals(MetricType.GAUGE, processedMetric.getMetricType());
         assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.toEpochMilli(), processedMetric.getTimestamp());
+        assertEquals(Instant.EPOCH.plusSeconds(10).getEpochSecond(), processedMetric.getTimestamp());
         assertFalse(processedMetric.getTags().isPresent());
         assertFalse(processedMetric.getAggregations().isPresent());
         assertEquals(Aggregation.AVG, processedMetric.getAggregationDetails().get().getAggregation());

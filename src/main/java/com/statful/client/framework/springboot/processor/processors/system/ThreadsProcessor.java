@@ -47,8 +47,8 @@ public class ThreadsProcessor implements MetricProcessor {
         return new ProcessedMetric.Builder().withName(SYSTEM_METRICS_PREFIX + metricSplit[0])
                 .withTags(tags)
                 .withMetricType(MetricType.GAUGE)
-                .withValue(exportedMetric.getValue().doubleValue())
-                .withTimestamp(exportedMetric.getTimestamp().getTime())
+                .withValue(exportedMetric.getValue())
+                .withTimestamp(exportedMetric.getTimestamp())
                 .build();
     }
 

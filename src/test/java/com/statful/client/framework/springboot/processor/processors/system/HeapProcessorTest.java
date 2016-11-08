@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Instant;
-import java.util.Date;
 
 import static com.statful.client.framework.springboot.processor.MetricProcessor.SYSTEM_METRICS_PREFIX;
 import static org.junit.Assert.assertEquals;
@@ -27,7 +26,7 @@ public class HeapProcessorTest {
         // Given
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName("heap")
-                .withTimestamp(Date.from(Instant.EPOCH))
+                .withTimestamp(Instant.EPOCH.plusSeconds(10).getEpochSecond())
                 .withValue(1D)
                 .build();
 
@@ -38,7 +37,7 @@ public class HeapProcessorTest {
         assertEquals(SYSTEM_METRICS_PREFIX + "heap", processedMetric.getName());
         assertEquals(MetricType.GAUGE, processedMetric.getMetricType());
         assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.toEpochMilli(), processedMetric.getTimestamp());
+        assertEquals(Instant.EPOCH.plusSeconds(10).getEpochSecond(), processedMetric.getTimestamp());
         assertEquals("max", processedMetric.getTags().get().getTagValue("type"));
         assertFalse(processedMetric.getAggregations().isPresent());
         assertFalse(processedMetric.getAggregationDetails().isPresent());
@@ -49,7 +48,7 @@ public class HeapProcessorTest {
         // Given
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName("heap.init")
-                .withTimestamp(Date.from(Instant.EPOCH))
+                .withTimestamp(Instant.EPOCH.plusSeconds(10).getEpochSecond())
                 .withValue(1D)
                 .build();
 
@@ -60,7 +59,7 @@ public class HeapProcessorTest {
         assertEquals(SYSTEM_METRICS_PREFIX + "heap", processedMetric.getName());
         assertEquals(MetricType.GAUGE, processedMetric.getMetricType());
         assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.toEpochMilli(), processedMetric.getTimestamp());
+        assertEquals(Instant.EPOCH.plusSeconds(10).getEpochSecond(), processedMetric.getTimestamp());
         assertEquals("init", processedMetric.getTags().get().getTagValue("type"));
         assertFalse(processedMetric.getAggregations().isPresent());
         assertFalse(processedMetric.getAggregationDetails().isPresent());

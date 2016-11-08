@@ -45,8 +45,8 @@ public class UptimeProcessor implements MetricProcessor {
         return new ProcessedMetric.Builder().withName(UPTIME_NAME)
                 .withTags(tags)
                 .withMetricType(MetricType.GAUGE)
-                .withValue(exportedMetric.getValue().doubleValue())
-                .withTimestamp(exportedMetric.getTimestamp().getTime())
+                .withValue(exportedMetric.getValue())
+                .withTimestamp(exportedMetric.getTimestamp())
                 .build();
     }
 

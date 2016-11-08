@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Instant;
-import java.util.Date;
 
 import static com.statful.client.framework.springboot.processor.MetricProcessor.TOMCAT_METRICS_PREFIX;
 import static org.junit.Assert.assertEquals;
@@ -27,7 +26,7 @@ public class HttpSessionsProcessorTest {
         // Given
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName("httpsessions.max")
-                .withTimestamp(Date.from(Instant.EPOCH))
+                .withTimestamp(Instant.EPOCH.plusSeconds(10).getEpochSecond())
                 .withValue(1D)
                 .build();
 
@@ -38,7 +37,7 @@ public class HttpSessionsProcessorTest {
         assertEquals(TOMCAT_METRICS_PREFIX + "httpsessions", processedMetric.getName());
         assertEquals(MetricType.GAUGE, processedMetric.getMetricType());
         assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.toEpochMilli(), processedMetric.getTimestamp());
+        assertEquals(Instant.EPOCH.plusSeconds(10).getEpochSecond(), processedMetric.getTimestamp());
         assertEquals("max", processedMetric.getTags().get().getTagValue("type"));
         assertFalse(processedMetric.getAggregations().isPresent());
         assertFalse(processedMetric.getAggregationDetails().isPresent());
