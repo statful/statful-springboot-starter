@@ -5,16 +5,15 @@ import com.statful.client.domain.api.AggregationFrequency;
 import com.statful.client.framework.springboot.common.ExportedMetric;
 import com.statful.client.framework.springboot.common.MetricType;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
+import com.statful.client.framework.springboot.processor.AbstractProcessorTest;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.time.Instant;
 
 import static com.statful.client.framework.springboot.processor.MetricProcessor.SYSTEM_METRICS_PREFIX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class SystemLoadProcessorTest {
+public class SystemLoadProcessorTest extends AbstractProcessorTest {
 
     private SystemLoadProcessor subject;
 
@@ -28,8 +27,8 @@ public class SystemLoadProcessorTest {
         // Given
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName("systemload.average")
-                .withTimestamp(Instant.EPOCH.plusSeconds(10).getEpochSecond())
-                .withValue(1D)
+                .withTimestamp(EPOCH_SECONDS_PLUS_10_SECS)
+                .withValue(METRIC_VALUE)
                 .build();
 
         // When
@@ -38,8 +37,8 @@ public class SystemLoadProcessorTest {
         // Then
         assertEquals(SYSTEM_METRICS_PREFIX + "systemload", processedMetric.getName());
         assertEquals(MetricType.GAUGE, processedMetric.getMetricType());
-        assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.plusSeconds(10).getEpochSecond(), processedMetric.getTimestamp());
+        assertEquals(Double.valueOf(METRIC_VALUE), processedMetric.getValue());
+        assertEquals(EPOCH_SECONDS_PLUS_10_SECS, processedMetric.getTimestamp());
         assertFalse(processedMetric.getTags().isPresent());
         assertFalse(processedMetric.getAggregations().isPresent());
         assertEquals(Aggregation.AVG, processedMetric.getAggregationDetails().get().getAggregation());
