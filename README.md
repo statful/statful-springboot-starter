@@ -44,7 +44,9 @@ After that simply add the dependency using Maven for example:
 </dependency>
 ```
 
-And enable metric collection by setting the following property:
+And enable `@ComponentScan` for the `com.statful.client.framework.springboot` base package.
+
+Enable metric collection by setting the following property:
 
 ```
 statful.client.springboot.metrics.enabled=true
@@ -92,13 +94,18 @@ INFO 57428 --- [pool-2-thread-1] c.s.c.core.sender.BufferedMetricsSender  : Dry 
 
 ### Extra Configuration
 
-You can get an extra level of customization by setting the namespace, prefix and a list of tags to be added across all collected metrics.
+You can get an extra level of customization by setting the namespace and prefix of your metrics.
 
 For that set the following application properties:
 
 ```
 statful.client.springboot.metrics.namespace=example
 statful.client.springboot.metrics.prefix=springboot
+```
+
+A list of tags to be added across all collected metrics can be configure with the following properties:
+
+```
 statful.client.springboot.metrics.tags[0].name=application
 statful.client.springboot.metrics.tags[0].value=starter
 statful.client.springboot.metrics.tags[1].name=framework
@@ -118,6 +125,8 @@ INFO 57755 --- [pool-2-thread-1] c.s.c.core.sender.BufferedMetricsSender  : Dry 
 INFO 57755 --- [pool-2-thread-1] c.s.c.core.sender.BufferedMetricsSender  : Dry metric: example.springboot.gauge.system.heap,framework=springboot,application=starter,type=init 262144.0 1476909489668
 INFO 57755 --- [pool-2-thread-1] c.s.c.core.sender.BufferedMetricsSender  : Dry metric: example.springboot.gauge.system.heap,framework=springboot,application=starter,type=used 112536.0 1476909489668
 ```
+
+> In order to be able to define metric tags as above the springboot [configuration-metadata-annotation-processor](http://docs.spring.io/spring-boot/docs/1.4.1.RELEASE/reference/html/configuration-metadata.html#configuration-metadata-annotation-processor) is used. If you're using AspectJ in your project please refer to the documentation on the expected annotation processor behaviour.
 
 ### Control Processors
 

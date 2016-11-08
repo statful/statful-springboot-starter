@@ -12,7 +12,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,10 +38,10 @@ public class SpringbootClientConfiguration {
      * Meta-configuration class.
      */
     public static class Metrics {
-        private List<Tags> tags = new ArrayList<>();
+        private List<Tags> tags;
 
         public List<Tags> getTags() {
-            return new ArrayList<>(tags);
+            return tags;
         }
 
         public void setTags(List<Tags> tags) {
@@ -77,7 +76,7 @@ public class SpringbootClientConfiguration {
     /**
      * Enable a metrics reader.
      * @param metricsEndpoint {@link MetricsEndpoint}
-     * @return
+     * @return {@link MetricsEndpointMetricReader}
      */
     @Bean
     @ConditionalOnProperty(value = "statful.client.springboot.metrics.enabled", havingValue = "true")
