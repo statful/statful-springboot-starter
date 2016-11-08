@@ -8,16 +8,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import java.time.Instant;
-import java.util.Date;
-
 import static com.statful.client.framework.springboot.processor.MetricProcessor.ACCUMULATED_METRICS_PREFIX;
 import static com.statful.client.framework.springboot.processor.MetricProcessor.SYSTEM_METRICS_PREFIX;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class StatfulMetricProcessorTest {
+public class StatfulMetricProcessorTest extends AbstractProcessorTest {
 
     private static final String GC_PS_SCAVENGE_COUNT = "gc.ps_scavenge.count";
     private static final String INVALID = "invalid";
@@ -41,8 +38,8 @@ public class StatfulMetricProcessorTest {
 
         EXPORTED_METRIC = new ExportedMetric.Builder()
                 .withName(GC_PS_SCAVENGE_COUNT)
-                .withValue(1D)
-                .withTimestamp(Date.from(Instant.EPOCH))
+                .withValue(METRIC_VALUE)
+                .withTimestamp(EPOCH_SECONDS_PLUS_10_SECS)
                 .build();
     }
 
@@ -77,8 +74,8 @@ public class StatfulMetricProcessorTest {
         // Then
         assertEquals(SYSTEM_METRICS_PREFIX + ACCUMULATED_METRICS_PREFIX + "gc", processedMetric.getName());
         assertEquals(MetricType.COUNTER, processedMetric.getMetricType());
-        assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.toEpochMilli(), processedMetric.getTimestamp());
+        assertEquals(Double.valueOf(METRIC_VALUE), processedMetric.getValue());
+        assertEquals(EPOCH_SECONDS_PLUS_10_SECS, processedMetric.getTimestamp());
         assertEquals("ps_scavenge", processedMetric.getTags().get().getTagValue("name"));
         assertFalse(processedMetric.getAggregations().isPresent());
         assertFalse(processedMetric.getAggregationDetails().isPresent());

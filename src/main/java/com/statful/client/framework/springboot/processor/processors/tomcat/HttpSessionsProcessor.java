@@ -36,8 +36,8 @@ public class HttpSessionsProcessor implements MetricProcessor {
         return new ProcessedMetric.Builder().withName(TOMCAT_METRICS_PREFIX + metricSplit[0])
                 .withTags(tags)
                 .withMetricType(MetricType.GAUGE)
-                .withValue(exportedMetric.getValue().doubleValue())
-                .withTimestamp(exportedMetric.getTimestamp().getTime())
+                .withValue(exportedMetric.getValue())
+                .withTimestamp(exportedMetric.getTimestamp())
                 .build();
     }
 

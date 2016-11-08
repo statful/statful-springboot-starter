@@ -3,17 +3,15 @@ package com.statful.client.framework.springboot.processor.processors.system;
 import com.statful.client.framework.springboot.common.ExportedMetric;
 import com.statful.client.framework.springboot.common.MetricType;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
+import com.statful.client.framework.springboot.processor.AbstractProcessorTest;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.time.Instant;
-import java.util.Date;
 
 import static com.statful.client.framework.springboot.processor.MetricProcessor.SYSTEM_METRICS_PREFIX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class ProcessorsProcessorTest {
+public class ProcessorsProcessorTest extends AbstractProcessorTest {
 
     private ProcessorsProcessor subject;
 
@@ -27,8 +25,8 @@ public class ProcessorsProcessorTest {
         // Given
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName("processors")
-                .withTimestamp(Date.from(Instant.EPOCH))
-                .withValue(1D)
+                .withTimestamp(EPOCH_SECONDS_PLUS_10_SECS)
+                .withValue(METRIC_VALUE)
                 .build();
 
         // When
@@ -37,8 +35,8 @@ public class ProcessorsProcessorTest {
         // Then
         assertEquals(SYSTEM_METRICS_PREFIX + "processors", processedMetric.getName());
         assertEquals(MetricType.GAUGE, processedMetric.getMetricType());
-        assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.toEpochMilli(), processedMetric.getTimestamp());
+        assertEquals(Double.valueOf(METRIC_VALUE), processedMetric.getValue());
+        assertEquals(EPOCH_SECONDS_PLUS_10_SECS, processedMetric.getTimestamp());
         assertFalse(processedMetric.getAggregations().isPresent());
         assertFalse(processedMetric.getTags().isPresent());
         assertFalse(processedMetric.getAggregationDetails().isPresent());

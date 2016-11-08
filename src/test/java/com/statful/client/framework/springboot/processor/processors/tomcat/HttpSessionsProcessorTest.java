@@ -3,17 +3,15 @@ package com.statful.client.framework.springboot.processor.processors.tomcat;
 import com.statful.client.framework.springboot.common.ExportedMetric;
 import com.statful.client.framework.springboot.common.MetricType;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
+import com.statful.client.framework.springboot.processor.AbstractProcessorTest;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.time.Instant;
-import java.util.Date;
 
 import static com.statful.client.framework.springboot.processor.MetricProcessor.TOMCAT_METRICS_PREFIX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class HttpSessionsProcessorTest {
+public class HttpSessionsProcessorTest extends AbstractProcessorTest {
 
     private HttpSessionsProcessor subject;
 
@@ -27,8 +25,8 @@ public class HttpSessionsProcessorTest {
         // Given
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName("httpsessions.max")
-                .withTimestamp(Date.from(Instant.EPOCH))
-                .withValue(1D)
+                .withTimestamp(EPOCH_SECONDS_PLUS_10_SECS)
+                .withValue(METRIC_VALUE)
                 .build();
 
         // When
@@ -37,8 +35,8 @@ public class HttpSessionsProcessorTest {
         // Then
         assertEquals(TOMCAT_METRICS_PREFIX + "httpsessions", processedMetric.getName());
         assertEquals(MetricType.GAUGE, processedMetric.getMetricType());
-        assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.toEpochMilli(), processedMetric.getTimestamp());
+        assertEquals(Double.valueOf(METRIC_VALUE), processedMetric.getValue());
+        assertEquals(EPOCH_SECONDS_PLUS_10_SECS, processedMetric.getTimestamp());
         assertEquals("max", processedMetric.getTags().get().getTagValue("type"));
         assertFalse(processedMetric.getAggregations().isPresent());
         assertFalse(processedMetric.getAggregationDetails().isPresent());

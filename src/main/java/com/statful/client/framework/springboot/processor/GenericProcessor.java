@@ -21,7 +21,7 @@ public final class GenericProcessor {
      * @param timestamp {@link long} Metric timestamp
      * @return {@link ProcessedMetric} Processed metric
      */
-    public static ProcessedMetric process(String name, MetricType metricType, Double value, long timestamp) {
+    public static ProcessedMetric process(String name, MetricType metricType, double value, long timestamp) {
         return new ProcessedMetric.Builder().withName(name)
                 .withMetricType(metricType)
                 .withValue(value)

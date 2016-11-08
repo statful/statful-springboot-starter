@@ -25,7 +25,7 @@ public class ProcessorsProcessor implements MetricProcessor {
     @Override
     public ProcessedMetric process(ExportedMetric exportedMetric) {
         return GenericProcessor.process(SYSTEM_METRICS_PREFIX + exportedMetric.getName(),
-                MetricType.GAUGE, exportedMetric.getValue().doubleValue(), exportedMetric.getTimestamp().getTime());
+                MetricType.GAUGE, exportedMetric.getValue(), exportedMetric.getTimestamp());
     }
 
     @Override

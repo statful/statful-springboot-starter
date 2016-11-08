@@ -47,8 +47,8 @@ public class StatfulClientProxy {
     public void ingestMetric(Metric<?> metric) {
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName(metric.getName())
-                .withValue(metric.getValue())
-                .withTimestamp(metric.getTimestamp())
+                .withValue(metric.getValue().doubleValue())
+                .withTimestamp(metric.getTimestamp().getTime() / 1000L)
                 .build();
 
         ingest(exportedMetric);
@@ -62,8 +62,8 @@ public class StatfulClientProxy {
     public void ingestMetric(Delta<?> delta) {
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName(delta.getName())
-                .withValue(delta.getValue())
-                .withTimestamp(delta.getTimestamp())
+                .withValue(delta.getValue().doubleValue())
+                .withTimestamp(delta.getTimestamp().getTime() / 1000L)
                 .build();
 
         ingest(exportedMetric);

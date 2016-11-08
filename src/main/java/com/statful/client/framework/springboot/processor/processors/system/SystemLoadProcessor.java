@@ -34,8 +34,8 @@ public class SystemLoadProcessor implements MetricProcessor {
 
         return new ProcessedMetric.Builder().withName(SYSTEM_METRICS_PREFIX + metricSplit[0])
                 .withMetricType(MetricType.GAUGE)
-                .withValue(exportedMetric.getValue().doubleValue())
-                .withTimestamp(exportedMetric.getTimestamp().getTime())
+                .withValue(exportedMetric.getValue())
+                .withTimestamp(exportedMetric.getTimestamp())
                 .aggregatedBy(new AggregationDetails(Aggregation.AVG, AggregationFrequency.FREQ_60))
                 .build();
     }

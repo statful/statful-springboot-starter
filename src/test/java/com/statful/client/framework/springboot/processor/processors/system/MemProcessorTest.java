@@ -3,17 +3,15 @@ package com.statful.client.framework.springboot.processor.processors.system;
 import com.statful.client.framework.springboot.common.ExportedMetric;
 import com.statful.client.framework.springboot.common.MetricType;
 import com.statful.client.framework.springboot.common.ProcessedMetric;
+import com.statful.client.framework.springboot.processor.AbstractProcessorTest;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.time.Instant;
-import java.util.Date;
 
 import static com.statful.client.framework.springboot.processor.MetricProcessor.SYSTEM_METRICS_PREFIX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class MemProcessorTest {
+public class MemProcessorTest extends AbstractProcessorTest {
 
     private MemProcessor subject;
 
@@ -27,8 +25,8 @@ public class MemProcessorTest {
         // Given
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName("mem")
-                .withTimestamp(Date.from(Instant.EPOCH))
-                .withValue(1D)
+                .withTimestamp(EPOCH_SECONDS_PLUS_10_SECS)
+                .withValue(METRIC_VALUE)
                 .build();
 
         // When
@@ -37,8 +35,8 @@ public class MemProcessorTest {
         // Then
         assertEquals(SYSTEM_METRICS_PREFIX + "mem", processedMetric.getName());
         assertEquals(MetricType.GAUGE, processedMetric.getMetricType());
-        assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.toEpochMilli(), processedMetric.getTimestamp());
+        assertEquals(Double.valueOf(METRIC_VALUE), processedMetric.getValue());
+        assertEquals(EPOCH_SECONDS_PLUS_10_SECS, processedMetric.getTimestamp());
         assertEquals("total", processedMetric.getTags().get().getTagValue("type"));
         assertFalse(processedMetric.getAggregations().isPresent());
         assertFalse(processedMetric.getAggregationDetails().isPresent());
@@ -49,8 +47,8 @@ public class MemProcessorTest {
         // Given
         ExportedMetric exportedMetric = new ExportedMetric.Builder()
                 .withName("mem.free")
-                .withTimestamp(Date.from(Instant.EPOCH))
-                .withValue(1D)
+                .withTimestamp(EPOCH_SECONDS_PLUS_10_SECS)
+                .withValue(METRIC_VALUE)
                 .build();
 
         // When
@@ -59,8 +57,8 @@ public class MemProcessorTest {
         // Then
         assertEquals(SYSTEM_METRICS_PREFIX + "mem", processedMetric.getName());
         assertEquals(MetricType.GAUGE, processedMetric.getMetricType());
-        assertEquals(Double.valueOf(1D), processedMetric.getValue());
-        assertEquals(Instant.EPOCH.toEpochMilli(), processedMetric.getTimestamp());
+        assertEquals(Double.valueOf(METRIC_VALUE), processedMetric.getValue());
+        assertEquals(EPOCH_SECONDS_PLUS_10_SECS, processedMetric.getTimestamp());
         assertEquals("free", processedMetric.getTags().get().getTagValue("type"));
         assertFalse(processedMetric.getAggregations().isPresent());
         assertFalse(processedMetric.getAggregationDetails().isPresent());
