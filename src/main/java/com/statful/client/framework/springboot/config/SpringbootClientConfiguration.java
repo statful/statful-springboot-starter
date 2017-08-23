@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class SpringbootClientConfiguration {
         private List<Tags> tags;
 
         public List<Tags> getTags() {
-            return tags;
+            return tags == null ? Collections.emptyList() : tags;
         }
 
         public void setTags(List<Tags> tags) {
