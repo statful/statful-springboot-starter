@@ -15,7 +15,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiFunction;
 
 /**
  * Class to proxy metrics into a {@link StatfulClient} implementation on the springboot client context.
@@ -97,16 +100,16 @@ public class StatfulClientProxy {
     }
 
     private Tags mergeDefaultTags(Optional<Tags> tags) {
-        Tags mergedTags = new Tags();
-        if (tags.isPresent()) {
-            mergedTags = tags.get();
-        }
 
-        Tags customTags = new Tags();
-        springbootClientConfiguration.getMetrics().getTags().forEach(tag ->
-                customTags.putTag(tag.getName(), tag.getValue()));
+        Tags mergedTags = tags.orElseGet(Tags::new);
 
-        return mergedTags.merge(customTags);
+        Optional.ofNullable(springbootClientConfiguration.getMetrics().getTags())
+                .orElse(Collections.emptyList())
+                .stream()
+                .filter(Objects::nonNull)
+                .forEach(tag -> mergedTags.putTag(tag.getName(), tag.getValue()));
+
+        return mergedTags;
     }
 
     private Aggregations getOrDefaultAggregations(Optional<Aggregations> aggregations) {
