@@ -5,6 +5,8 @@ import com.statful.client.framework.springboot.common.ProcessedMetric;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Wrapper class to present processor functionality.
@@ -33,10 +35,11 @@ public class StatfulMetricProcessor {
      * @param exportedMetric {@link ExportedMetric} Exported metric
      * @return {@link ProcessedMetric} Processed metric
      */
-    public ProcessedMetric process(ExportedMetric exportedMetric) {
-        MetricProcessor metricProcessor = processorMap.getProcessor(exportedMetric.getName());
-
-        return metricProcessor.process(exportedMetric);
+    public List<ProcessedMetric> process(ExportedMetric exportedMetric) {
+        return processorMap.getProcessors(exportedMetric.getName())
+                .stream()
+                .map(metricProcessor -> metricProcessor.process(exportedMetric))
+                .collect(Collectors.toList());
     }
 
     public void setProcessorMap(ProcessorMap processorMap) {

@@ -12,25 +12,49 @@ import static com.statful.client.framework.springboot.processor.MetricProcessor.
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class GcProcessorTest extends GcProcessorBaseTest {
+public class GcDiffProcessorTest extends GcProcessorBaseTest {
 
-    private GcProcessor subject;
+    private GcDiffProcessor subject;
 
     @Before
     public void before() {
-        subject = new GcProcessor();
+        subject = new GcDiffProcessor();
     }
 
     @Test
     public void shouldProcessMetricCount() {
 
-        this.shouldProcessMetricCount(subject, SYSTEM_METRICS_PREFIX + ACCUMULATED_METRICS_PREFIX + "gc");
-
+        this.shouldProcessMetricCount(subject, SYSTEM_METRICS_PREFIX + "gc");
     }
 
     @Test
     public void shouldProcessMetricGauge() {
-        this.shouldProcessMetricGauge(subject, SYSTEM_METRICS_PREFIX + ACCUMULATED_METRICS_PREFIX + "gc");
+
+        this.shouldProcessMetricGauge(subject, SYSTEM_METRICS_PREFIX + "gc");
+    }
+
+    @Test
+    public void shouldProcessMetricCountAndProduceDiff() {
+
+        // Given
+        ExportedMetric exportedMetric1 = new ExportedMetric.Builder()
+                .withName("gc.ps_scavenge.count")
+                .withTimestamp(EPOCH_SECONDS_PLUS_10_SECS)
+                .withValue(1D)
+                .build();
+
+        ExportedMetric exportedMetric2 = new ExportedMetric.Builder()
+                .withName("gc.ps_scavenge.count")
+                .withTimestamp(EPOCH_SECONDS_PLUS_10_SECS)
+                .withValue(5D)
+                .build();
+
+        // When
+        subject.process(exportedMetric1);
+        ProcessedMetric processedMetric = subject.process(exportedMetric2);
+        assertEquals(Double.valueOf(4.0), processedMetric.getValue());
+
+
     }
 
     @Test(expected = IllegalArgumentException.class)

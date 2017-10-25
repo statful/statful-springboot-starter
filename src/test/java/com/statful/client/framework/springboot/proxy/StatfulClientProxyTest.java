@@ -1,5 +1,6 @@
 package com.statful.client.framework.springboot.proxy;
 
+import com.google.common.collect.Lists;
 import com.statful.client.core.StatfulFactory;
 import com.statful.client.domain.api.*;
 import com.statful.client.framework.springboot.common.AggregationDetails;
@@ -15,6 +16,7 @@ import org.springframework.boot.actuate.metrics.Metric;
 import org.springframework.boot.actuate.metrics.writer.Delta;
 
 import java.util.Collections;
+import java.util.List;
 
 import static com.statful.client.framework.springboot.config.SpringbootClientConfiguration.Metrics;
 import static org.junit.Assert.assertEquals;
@@ -72,8 +74,8 @@ public class StatfulClientProxyTest {
     public void shouldIngestFromDelta() {
         // Given
         when(statfulMetricProcessor.validate(any())).thenReturn(true);
-        ProcessedMetric processedMetric = getProcessedMetric();
-        when(statfulMetricProcessor.process(any())).thenReturn(processedMetric);
+        List<ProcessedMetric> processedMetrics = Lists.newArrayList(getProcessedMetric());
+        when(statfulMetricProcessor.process(any())).thenReturn(processedMetrics);
         Delta delta = new Delta<>(METRIC_NAME, 1L);
 
         // When
@@ -88,8 +90,8 @@ public class StatfulClientProxyTest {
     public void shouldIngestFromMetric() {
         // Given
         when(statfulMetricProcessor.validate(any())).thenReturn(true);
-        ProcessedMetric processedMetric = getProcessedMetric();
-        when(statfulMetricProcessor.process(any())).thenReturn(processedMetric);
+        List<ProcessedMetric> processedMetrics = Lists.newArrayList(getProcessedMetric());
+        when(statfulMetricProcessor.process(any())).thenReturn(processedMetrics);
         Metric metric = new Metric<>(METRIC_NAME, 1L);
 
         // When
@@ -104,8 +106,8 @@ public class StatfulClientProxyTest {
     public void shouldIngestFromAggregatedMetric() {
         // Given
         when(statfulMetricProcessor.validate(any())).thenReturn(true);
-        ProcessedMetric processedMetric = getProcessedAggregatedMetric();
-        when(statfulMetricProcessor.process(any())).thenReturn(processedMetric);
+        List<ProcessedMetric> processedMetrics = Lists.newArrayList(getProcessedAggregatedMetric());
+        when(statfulMetricProcessor.process(any())).thenReturn(processedMetrics);
         Metric metric = new Metric<>(METRIC_NAME, 1L);
 
         // When
@@ -120,8 +122,8 @@ public class StatfulClientProxyTest {
     public void shouldIngestMetricWithDefaultGlobalTags() {
         // Given
         when(statfulMetricProcessor.validate(any())).thenReturn(true);
-        ProcessedMetric processedMetric = getProcessedMetric();
-        when(statfulMetricProcessor.process(any())).thenReturn(processedMetric);
+        List<ProcessedMetric> processedMetrics = Lists.newArrayList(getProcessedMetric());
+        when(statfulMetricProcessor.process(any())).thenReturn(processedMetrics);
         Metric metric = new Metric<>(METRIC_NAME, 1L);
 
         // When
@@ -138,7 +140,7 @@ public class StatfulClientProxyTest {
     public void shouldIngestMetricWithMergedTags() {
         // Given
         when(statfulMetricProcessor.validate(any())).thenReturn(true);
-        ProcessedMetric processedMetric = getProcessedMetricWithTags();
+        List<ProcessedMetric> processedMetric = Lists.newArrayList(getProcessedMetricWithTags());
         when(statfulMetricProcessor.process(any())).thenReturn(processedMetric);
         Metric metric = new Metric<>(METRIC_NAME, 1L);
 
@@ -157,8 +159,8 @@ public class StatfulClientProxyTest {
     public void shouldIngestMetricWithAggregations() {
         // Given
         when(statfulMetricProcessor.validate(any())).thenReturn(true);
-        ProcessedMetric processedMetric = getProcessedMetricWithAggregations();
-        when(statfulMetricProcessor.process(any())).thenReturn(processedMetric);
+        List<ProcessedMetric> processedMetrics = Lists.newArrayList(getProcessedMetricWithAggregations());
+        when(statfulMetricProcessor.process(any())).thenReturn(processedMetrics);
         Metric metric = new Metric<>(METRIC_NAME, 1L);
 
         // When

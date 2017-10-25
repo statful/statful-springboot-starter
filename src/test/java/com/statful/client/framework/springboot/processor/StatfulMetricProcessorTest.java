@@ -8,6 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.statful.client.framework.springboot.processor.MetricProcessor.ACCUMULATED_METRICS_PREFIX;
 import static com.statful.client.framework.springboot.processor.MetricProcessor.SYSTEM_METRICS_PREFIX;
 import static org.junit.Assert.*;
@@ -31,7 +34,10 @@ public class StatfulMetricProcessorTest extends AbstractProcessorTest {
 
         when(processorMap.validateProcessor(GC_PS_SCAVENGE_COUNT)).thenReturn(true);
         when(processorMap.validateProcessor(INVALID)).thenReturn(false);
-        when(processorMap.getProcessor(GC_PS_SCAVENGE_COUNT)).thenReturn(new GcProcessor());
+        List<MetricProcessor> metricProcessors = new ArrayList<>();
+        metricProcessors.add(new GcProcessor());
+        when(processorMap.getProcessors(GC_PS_SCAVENGE_COUNT))
+                .thenReturn(metricProcessors);
 
         subject = new StatfulMetricProcessor();
         subject.setProcessorMap(processorMap);
@@ -69,16 +75,22 @@ public class StatfulMetricProcessorTest extends AbstractProcessorTest {
     @Test
     public void shouldReturnProperProcessor() {
         // When
-        ProcessedMetric processedMetric = subject.process(EXPORTED_METRIC);
+        List<ProcessedMetric> processedMetrics = subject.process(EXPORTED_METRIC);
 
-        // Then
-        assertEquals(SYSTEM_METRICS_PREFIX + ACCUMULATED_METRICS_PREFIX + "gc", processedMetric.getName());
-        assertEquals(MetricType.COUNTER, processedMetric.getMetricType());
-        assertEquals(Double.valueOf(METRIC_VALUE), processedMetric.getValue());
-        assertEquals(EPOCH_SECONDS_PLUS_10_SECS, processedMetric.getTimestamp());
-        assertEquals("ps_scavenge", processedMetric.getTags().get().getTagValue("name"));
-        assertFalse(processedMetric.getAggregations().isPresent());
-        assertFalse(processedMetric.getAggregationDetails().isPresent());
+        assertEquals(1, processedMetrics.size());
+
+        processedMetrics.forEach(processedMetric ->  {
+            // Then
+            assertEquals(SYSTEM_METRICS_PREFIX + ACCUMULATED_METRICS_PREFIX + "gc", processedMetric.getName());
+            assertEquals(MetricType.COUNTER, processedMetric.getMetricType());
+            assertEquals(Double.valueOf(METRIC_VALUE), processedMetric.getValue());
+            assertEquals(EPOCH_SECONDS_PLUS_10_SECS, processedMetric.getTimestamp());
+            assertEquals("ps_scavenge", processedMetric.getTags().get().getTagValue("name"));
+            assertFalse(processedMetric.getAggregations().isPresent());
+            assertFalse(processedMetric.getAggregationDetails().isPresent());
+        });
+
+
     }
 
 }
