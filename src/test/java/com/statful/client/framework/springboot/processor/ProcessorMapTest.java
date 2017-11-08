@@ -52,10 +52,10 @@ public class ProcessorMapTest {
         String metric = "gc";
 
         // When
-        MetricProcessor metricProcessor = subject.getProcessor(metric);
+        List<MetricProcessor> metricProcessors = subject.getProcessors(metric);
 
         // Then
-        assertEquals(GcProcessor.class, metricProcessor.getClass());
+        metricProcessors.forEach(metricProcessor -> assertEquals(GcProcessor.class, metricProcessor.getClass()));
     }
 
     @Test
@@ -65,6 +65,7 @@ public class ProcessorMapTest {
         metricProcessors.add(new HttpRequestsProcessor());
         metricProcessors.add(new ClassesProcessor());
         metricProcessors.add(new GcProcessor());
+        metricProcessors.add(new GcDiffProcessor());
         metricProcessors.add(new HeapProcessor());
         metricProcessors.add(new MemProcessor());
         metricProcessors.add(new ProcessorsProcessor());
@@ -78,9 +79,9 @@ public class ProcessorMapTest {
 
         // Then
         assertEquals("Number of mappers should be expected", 13, subject.getProcessors().size());
-        assertEquals(HttpRequestsProcessor.class, subject.getProcessors().get("counter.status").getClass());
-        assertEquals(HttpRequestsProcessor.class, subject.getProcessors().get("gauge.response").getClass());
-        assertEquals(GcProcessor.class, subject.getProcessors().get("gc").getClass());
+        assertEquals(HttpRequestsProcessor.class, subject.getProcessors().get("counter.status").get(0).getClass());
+        assertEquals(HttpRequestsProcessor.class, subject.getProcessors().get("gauge.response").get(0).getClass());
+        assertEquals(GcProcessor.class, subject.getProcessors().get("gc").get(0).getClass());
 
     }
 
@@ -90,7 +91,7 @@ public class ProcessorMapTest {
         String metric = "invalid";
 
         // When
-        subject.getProcessor(metric);
+        subject.getProcessors(metric);
     }
 
 }

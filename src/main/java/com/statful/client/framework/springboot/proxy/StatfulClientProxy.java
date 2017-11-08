@@ -18,7 +18,6 @@ import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.BiFunction;
 
 /**
  * Class to proxy metrics into a {@link StatfulClient} implementation on the springboot client context.
@@ -74,13 +73,13 @@ public class StatfulClientProxy {
 
     private void ingest(ExportedMetric exportedMetric) {
         if (statfulMetricProcessor.validate(exportedMetric)) {
-            ProcessedMetric processedMetric = statfulMetricProcessor.process(exportedMetric);
-
-            if (processedMetric.getAggregationDetails().isPresent()) {
-                putMetricAggregated(processedMetric);
-            } else {
-                putMetric(processedMetric);
-            }
+            statfulMetricProcessor.process(exportedMetric).forEach(processedMetric -> {
+                if (processedMetric.getAggregationDetails().isPresent()) {
+                    putMetricAggregated(processedMetric);
+                } else {
+                    putMetric(processedMetric);
+                }
+            });
         }
     }
 
