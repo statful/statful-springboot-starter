@@ -139,6 +139,7 @@ statful.client.springboot.processors.system.classes.enabled=true
 statful.client.springboot.processors.system.gc.enabled=true
 statful.client.springboot.processors.system.heap.enabled=true
 statful.client.springboot.processors.system.mem.enabled=true
+statful.client.springboot.processors.system.gc.diff.enabled=true
 statful.client.springboot.processors.system.processors.enabled=true
 statful.client.springboot.processors.system.systemload.enabled=true
 statful.client.springboot.processors.system.threads.enabled=true
