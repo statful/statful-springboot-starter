@@ -5,7 +5,6 @@
     <groupId>com.statful.client.framework</groupId>
     <artifactId>client-springboot</artifactId>
     <version>1.0.9-SNAPSHOT</version>
-    <packaging>jar</packaging>
 
     <name>spring-client-springboot</name>
     <description>Spring Boot client to send metrics to Statful.</description>
@@ -38,35 +37,77 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <statful-client.version>1.2.0</statful-client.version>
-
+        <statful-client.version>2.2.0</statful-client.version>
+        <aspectj.version>1.9.4</aspectj.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.statful.client.framework</groupId>
             <artifactId>statful-micrometer-registry</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.statful.client</groupId>
             <artifactId>http-client</artifactId>
             <version>${statful-client.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.statful.client</groupId>
             <artifactId>udp-client</artifactId>
             <version>${statful-client.version}</version>
-            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.statful.client</groupId>
+            <artifactId>aspects</artifactId>
+            <version>${statful-client.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
         </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <version>1.8</version>
+                <configuration>
+                    <showWeaveInfo>false</showWeaveInfo>
+                    <complianceLevel>1.8</complianceLevel>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <Xlint>ignore</Xlint>
+                    <weaveDependencies>
+                        <weaveDependency>
+                            <groupId>com.statful.client</groupId>
+                            <artifactId>aspects</artifactId>
+                        </weaveDependency>
+                    </weaveDependencies>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
