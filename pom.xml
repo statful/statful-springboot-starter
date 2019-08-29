@@ -45,12 +45,18 @@
         <dependency>
             <groupId>com.statful.client.framework</groupId>
             <artifactId>statful-micrometer-registry</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
+            <version>1.0.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.statful.client</groupId>
             <artifactId>http-client</artifactId>
+            <version>${statful-client.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.statful.client</groupId>
+            <artifactId>udp-client</artifactId>
             <version>${statful-client.version}</version>
         </dependency>
 
