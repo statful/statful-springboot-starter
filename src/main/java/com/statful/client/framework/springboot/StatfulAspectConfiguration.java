@@ -1,4 +1,4 @@
-package com.statful.client.framework.springboot.registry;
+package com.statful.client.framework.springboot;
 
 import com.statful.client.aspects.StatfulAspect;
 import com.statful.client.domain.api.StatfulClient;

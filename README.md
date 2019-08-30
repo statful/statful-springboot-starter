@@ -31,9 +31,7 @@ This client has the following requirements:
 
 ## Quick start
 
-This client requires you to configure and initialize a `StatfulClient` bean as described [here](https://github.com/statful/statful-client-java#quick-start). 
-
-After that simply add the dependency using Maven for example:
+Add the dependency using Maven for example:
 
 ```
 <dependency>
@@ -43,12 +41,10 @@ After that simply add the dependency using Maven for example:
 </dependency>
 ```
 
-And enable `@ComponentScan` for the `com.statful.client.framework.springboot` base package.
-
-Enable metric collection by setting the following property:
+And set your API Token for authentication
 
 ```
-statful.client.springboot.metrics.enabled=true
+statful.client.token=your-token
 ```
 
 You can also define some custom properties for the metrics collected. For examples and detailed explanation on these properties check [statful-metric-registry](https://github.com/statful/statful-micrometer-registry)
