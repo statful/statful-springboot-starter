@@ -63,12 +63,6 @@
 
         <dependency>
             <groupId>com.statful.client</groupId>
-            <artifactId>udp-client</artifactId>
-            <version>${statful-client.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.statful.client</groupId>
             <artifactId>aspects</artifactId>
             <version>${statful-client.version}</version>
         </dependency>
