@@ -1,9 +1,10 @@
-Statful Client for Springboot
+Statful Starter for Springboot
 ==============
 
 [![Build Status](https://travis-ci.org/statful/statful-client-springboot.svg?branch=master)](https://travis-ci.org/statful/statful-client-springboot)
 
-Statful client for Springboot. This client is intended to gather and send metrics through [springboot-actuator](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-metrics.html) and send them to Statful.
+Statful starter for Springboot. Initializes the [statful-client-java](https://github.com/statful/statful-client-java) 
+ and [springboot-actuator](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-metrics.html) to gather and send metrics to Statful.
 
 ## Table of Contents
 
@@ -36,7 +37,7 @@ Add the dependency using Maven for example:
 ```
 <dependency>
     <groupId>com.statful.client.framework</groupId>
-    <artifactId>client-springboot</artifactId>
+    <artifactId>statful-springboot-starter</artifactId>
     <version>${statful-client-springboot.version}</version>
 </dependency>
 ```
@@ -55,4 +56,4 @@ You can also define some custom properties for the metrics collected. For exampl
 
 ## License
 
-Statful Spring Boot Client is available under the MIT license. See the [LICENSE](https://raw.githubusercontent.com/statful/statful-client-springboot/master/LICENSE) file for more information.
+Statful Spring Boot Starter is available under the MIT license. See the [LICENSE](https://raw.githubusercontent.com/statful/statful-client-springboot/master/LICENSE) file for more information.

@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.statful.client.framework</groupId>
-    <artifactId>client-springboot</artifactId>
-    <version>1.0.9-SNAPSHOT</version>
+    <artifactId>statful-springboot-starter</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 
-    <name>spring-client-springboot</name>
-    <description>Spring Boot client to send metrics to Statful.</description>
+    <name>statful-springboot-starter</name>
+    <description>Spring Boot starter to send metrics to Statful.</description>
     <url>http://www.statful.com</url>
 
     <licenses>
