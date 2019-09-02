@@ -5,6 +5,7 @@ import com.statful.client.core.api.StatfulClientBuilder;
 import com.statful.client.domain.api.StatfulClient;
 import com.statful.client.domain.api.Transport;
 import com.statful.client.framework.springboot.properties.StatfulClientProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 public class StatfulClientAutoConfiguration {
 
     @Bean
+    @ConditionalOnMissingBean(StatfulClient.class)
     @ConditionalOnProperty(value = "statful.client.token")
     public StatfulClient statfulClient(StatfulClientProperties statfulClientProperties) {
 
