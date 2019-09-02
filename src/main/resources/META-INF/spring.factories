@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.statful.client.framework.springboot.StatfulClientAutoConfiguration,\
+  com.statful.client.framework.springboot.StatfulAspectConfiguration,\
+  com.statful.client.framework.springboot.StatfulRegistryAutoConfiguration

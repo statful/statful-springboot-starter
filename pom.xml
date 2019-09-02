@@ -5,7 +5,6 @@
     <groupId>com.statful.client.framework</groupId>
     <artifactId>client-springboot</artifactId>
     <version>1.0.9-SNAPSHOT</version>
-    <packaging>jar</packaging>
 
     <name>spring-client-springboot</name>
     <description>Spring Boot client to send metrics to Statful.</description>
@@ -38,67 +37,84 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <statful-client.version>1.2.0</statful-client.version>
-        <spring-boot-actuator.version>1.4.1.RELEASE</spring-boot-actuator.version>
-        <spring-boot-configuration-processor.version>1.4.1.RELEASE</spring-boot-configuration-processor.version>
-        <mockito.version>1.10.19</mockito.version>
-        <junit.version>4.12</junit.version>
-        <guava.version>23.0</guava.version>
+        <statful-client.version>2.3.1</statful-client.version>
+        <aspectj.version>1.9.4</aspectj.version>
+        <statful-micrometer-registry.version>1.0.4</statful-micrometer-registry.version>
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>com.statful.client.framework</groupId>
+            <artifactId>statful-micrometer-registry</artifactId>
+            <version>${statful-micrometer-registry.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.statful.client</groupId>
             <artifactId>http-client</artifactId>
             <version>${statful-client.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.statful.client</groupId>
             <artifactId>udp-client</artifactId>
             <version>${statful-client.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-actuator</artifactId>
-            <version>${spring-boot-actuator.version}</version>
-            <scope>provided</scope>
+            <groupId>com.statful.client</groupId>
+            <artifactId>udp-client</artifactId>
+            <version>${statful-client.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <version>${spring-boot-configuration-processor.version}</version>
-            <optional>true</optional>
+            <groupId>com.statful.client</groupId>
+            <artifactId>aspects</artifactId>
+            <version>${statful-client.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>${mockito.version}</version>
-            <scope>test</scope>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <version>1.8</version>
+                <configuration>
+                    <showWeaveInfo>false</showWeaveInfo>
+                    <complianceLevel>1.8</complianceLevel>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <Xlint>ignore</Xlint>
+                    <weaveDependencies>
+                        <weaveDependency>
+                            <groupId>com.statful.client</groupId>
+                            <artifactId>aspects</artifactId>
+                        </weaveDependency>
+                    </weaveDependencies>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
@@ -122,27 +138,6 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <aggregate>true</aggregate>
-                    <check>
-                        <haltOnFailure>true</haltOnFailure>
-                        <totalBranchRate>95</totalBranchRate>
-                        <totalLineRate>95</totalLineRate>
-                    </check>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>clean</goal>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
