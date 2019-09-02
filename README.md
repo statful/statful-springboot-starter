@@ -48,7 +48,7 @@ And set your API Token for authentication
 statful.client.token=your-token
 ```
 
-> By default the starter configures statful-java-client with HTTP transport. For more values configured by default check https://github.com/statful/statful-client-java/#global-configuration 
+> By default the starter configures the Statful Java Client with HTTP transport. For more values configured by default check https://github.com/statful/statful-client-java/#global-configuration 
 
 You can also define some custom properties for the metrics collected. For examples and detailed explanation on these properties check [statful-metric-registry](https://github.com/statful/statful-micrometer-registry)
  
