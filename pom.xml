@@ -4,7 +4,7 @@
 
     <groupId>com.statful.client.framework</groupId>
     <artifactId>statful-springboot-starter</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>statful-springboot-starter</name>
     <description>Spring Boot starter to send metrics to Statful.</description>
@@ -30,7 +30,7 @@
         <connection>scm:git:git@github.com:statful/statful-client-springboot.git</connection>
         <developerConnection>scm:git:git@github.com:statful/statful-client-springboot.git</developerConnection>
         <url>https://github.com/statful/statful-client-springboot.git</url>
-        <tag>HEAD</tag>
+        <tag>statful-springboot-starter-1.0.0</tag>
     </scm>
 
     <properties>
