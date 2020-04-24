@@ -39,7 +39,7 @@
         <java.version>1.8</java.version>
         <statful-client.version>2.3.2</statful-client.version>
         <aspectj.version>1.9.4</aspectj.version>
-        <statful-micrometer-registry.version>1.0.4</statful-micrometer-registry.version>
+        <statful-micrometer-registry.version>1.0.5</statful-micrometer-registry.version>
     </properties>
 
     <dependencies>
